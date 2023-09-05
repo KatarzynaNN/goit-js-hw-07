@@ -1,4 +1,4 @@
-import { galleryItems } from './gallery-items.js';
+import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
 console.log(galleryItems);
@@ -13,3 +13,9 @@ const markup = galleryItems
 	.join("");
 
 galleryList.innerHTML = markup;
+
+let lightbox = new SimpleLightbox(".gallery a", {
+	captionsData: "alt",
+	captionPosition: "bottom",
+	captionDelay: 250,
+});
