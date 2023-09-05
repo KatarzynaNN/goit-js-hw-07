@@ -14,24 +14,28 @@ const markup = galleryItems
 
 galleryList.innerHTML = markup;
 
+// z dokumentacji lightbox
+const content = document.createElement("div");
+const img = document.createElement("img");
+content.append(img);
+const instance = basicLightbox.create(content);
+
 galleryList.addEventListener("click", (event) => {
 	event.preventDefault();
 	//tylko kliknięcie w img
 	if (event.target.nodeName !== "IMG") {
 		return;
 	}
-	// z dokumentacji lightbox
-	const content = document.createElement("div");
-	const img = document.createElement("img");
-	img.src = event.target.getAttribute("data-source");
-	content.append(img);
-	const instance = basicLightbox.create(content);
-	instance.show();
 
-	// zamknięcie okna przyciskiem esc
-	document.addEventListener("keydown", (event) => {
-		if (event.key === "Escape") {
-			instance.close();
-		}
-	});
+	img.src = event.target.dataset.source;
+
+	// z dokumentacji lightbox
+	instance.show();
+});
+
+// zamknięcie okna przyciskiem esc
+document.addEventListener("keydown", (event) => {
+	if (event.key === "Escape") {
+		instance.close();
+	}
 });
