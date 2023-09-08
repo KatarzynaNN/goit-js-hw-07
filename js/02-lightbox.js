@@ -12,7 +12,7 @@ const markup = galleryItems
 	)
 	.join("");
 
-galleryList.innerHTML = markup;
+galleryList.insertAdjacentHTML("beforeend", markup);
 
 const lightbox = new SimpleLightbox(".gallery a", {
 	captionsData: "alt",

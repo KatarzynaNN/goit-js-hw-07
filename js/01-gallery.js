@@ -12,30 +12,30 @@ const markup = galleryItems
 	)
 	.join("");
 
-galleryList.innerHTML = markup;
+galleryList.insertAdjacentHTML("beforeend", markup);
+let instance;
 
-// z dokumentacji lightbox
-const content = document.createElement("div");
-const img = document.createElement("img");
-content.append(img);
-const instance = basicLightbox.create(content);
+const onClose = (event) => {
+	if (event.key === "Escape") {
+		instance.close();
+		document.removeEventListener("keydown", onClose);
+	}
+};
 
-galleryList.addEventListener("click", (event) => {
+const onShow = (event) => {
 	event.preventDefault();
 	//tylko kliknięcie w img
 	if (event.target.nodeName !== "IMG") {
 		return;
 	}
-
-	img.src = event.target.dataset.source;
-
 	// z dokumentacji lightbox
+	const content = document.createElement("div");
+	const img = document.createElement("img");
+	img.src = event.target.dataset.source;
+	content.append(img);
+	instance = basicLightbox.create(content);
 	instance.show();
-});
+	document.addEventListener("keydown", onClose);
+};
 
-// zamknięcie okna przyciskiem esc
-document.addEventListener("keydown", (event) => {
-	if (event.key === "Escape") {
-		instance.close();
-	}
-});
+galleryList.addEventListener("click", onShow);
